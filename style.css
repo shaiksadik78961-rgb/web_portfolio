@@ -1,786 +1,193 @@
 /* ========================================================
-   GLOBAL STYLES & RESET
-   Clean light-mode bento portfolio theme.
+   BASE & THEME VARIABLES
 ======================================================== */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --text: #111827;
+    --muted: #4b5563;
+    --teal: #0e94a0;
+    --teal-soft: #e6f6f7;
+    --dark: #111111;
 }
 
-html {
-    /* Smooth page navigation between sections */
-    scroll-behavior: smooth;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f4f5f7; /* Soft light gray page background */
-    color: #111827;            /* Dark charcoal text */
+    background: var(--bg);
+    color: var(--text);
     line-height: 1.6;
 }
 
-/* Central container for all sections */
-.page-container {
-    width: 92%;
-    max-width: 1080px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding-bottom: 40px;
-}
-
-/* Crisp white rounded bento card style */
-.card {
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 20px;
-    padding: 32px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-}
-
-/* Subtle section kickers / category labels */
-.section-kicker {
-    display: inline-block;
-    text-transform: uppercase;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: #0e94a0; /* Teal accent */
-    margin-bottom: 6px;
-}
-
-.section-title {
-    font-size: 1.85rem;
-    font-weight: 800;
-    color: #111827;
-    letter-spacing: -0.5px;
-}
-
-.section-subtitle {
-    font-size: 0.95rem;
-    color: #4b5563;
-    line-height: 1.5;
-}
-
 /* ========================================================
-   PILL BUTTONS
+   LAYOUT HELPERS & SHARED CARDS
 ======================================================== */
+.container { width: 92%; max-width: 1080px; margin: 0 auto; }
+.stack { display: flex; flex-direction: column; gap: 24px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.row-between { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.flex-col { display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+.center { text-align: center; justify-content: center; }
 
-.btn {
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    transition: border-color 0.2s ease;
+}
+.hoverable:hover { border-color: var(--teal); }
+
+/* Typography */
+h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.5px; margin: 16px 0; }
+h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.muted { font-size: 0.92rem; color: var(--muted); }
+.accent { font-size: 0.88rem; font-weight: 600; color: var(--teal); margin-bottom: 8px; }
+.kicker { display: inline-block; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--teal); margin-bottom: 6px; }
+
+/* Pills, Badges & Buttons */
+.badge {
+    display: inline-block;
+    background: var(--teal-soft);
+    color: var(--teal);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+}
+
+.btn, .btn-outline {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    border-radius: 999px;
     text-decoration: none;
-    font-size: 0.9rem;
     font-weight: 600;
+    font-size: 0.9rem;
     cursor: pointer;
-    border: none;
-    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    transition: 0.2s ease;
 }
-
-/* Dark pill button */
-.btn-pill-dark {
-    background-color: #111111;
-    color: #ffffff;
-    border-radius: 999px;
-    padding: 11px 24px;
-}
-
-.btn-pill-dark:hover {
-    background-color: #262626;
-    color: #ffffff;
-}
-
-/* Outlined pill button */
-.btn-pill-outline {
-    background-color: #ffffff;
-    color: #4b5563;
-    border: 1px solid #d1d5db;
-    border-radius: 999px;
-    padding: 8px 18px;
-    font-size: 0.85rem;
-}
-
-.btn-pill-outline:hover {
-    background-color: #111111;
-    color: #ffffff;
-    border-color: #111111;
-}
+.btn { background: var(--dark); color: #fff; padding: 11px 24px; border: none; }
+.btn:hover { background: #262626; }
+.btn-sm { padding: 8px 18px; font-size: 0.85rem; }
+.btn.full { width: 100%; padding: 13px; }
+.btn-outline { background: #fff; color: var(--muted); border: 1px solid #d1d5db; padding: 8px 18px; font-size: 0.85rem; }
+.btn-outline:hover { background: var(--dark); color: #fff; border-color: var(--dark); }
 
 /* ========================================================
-   1. TOP NAVIGATION BAR
-   Clean floating white pill navbar with flexbox alignment.
+   1. NAVIGATION BAR
 ======================================================== */
-
-.navbar-wrapper {
+.navbar {
     position: sticky;
     top: 14px;
-    z-index: 1000;
-    width: 92%;
-    max-width: 1080px;
-    margin: 14px auto 20px auto;
-}
-
-.nav-card {
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 999px;
+    z-index: 100;
+    margin: 14px auto 22px;
     padding: 10px 22px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
 }
-
-.nav-brand {
-    font-weight: 800;
-    font-size: 1.05rem;
-    color: #111827;
-    text-decoration: none;
-    letter-spacing: 0.5px;
-}
-
-.nav-links {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #4b5563;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: color 0.15s ease;
-}
-
-.nav-links a:hover {
-    color: #0e94a0;
-}
-
-.nav-cta {
-    padding: 8px 18px;
-    font-size: 0.85rem;
-}
+.brand { font-weight: 800; font-size: 1.05rem; color: var(--text); text-decoration: none; letter-spacing: 0.5px; }
+.nav-links { display: flex; gap: 20px; }
+.nav-links a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: color 0.15s; }
+.nav-links a:hover { color: var(--teal); }
 
 /* ========================================================
-   2. INTRODUCTION (HERO CARD)
-   Two-column flexbox bento card.
+   2. HERO & 3. TEAL BANNER
 ======================================================== */
-
-.hero-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 40px;
-    padding: 44px;
-}
-
-.hero-left {
-    flex: 1;
-}
-
-.badge-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background-color: #e6f6f7;
-    color: #0e94a0;
-    font-size: 0.78rem;
-    font-weight: 700;
-    padding: 6px 14px;
-    border-radius: 999px;
-    margin-bottom: 18px;
-    letter-spacing: 0.5px;
-}
-
-.status-dot {
-    color: #0e94a0;
-    font-size: 0.75rem;
-}
-
-.hero-heading {
-    font-size: 2.5rem;
-    font-weight: 800;
-    line-height: 1.15;
-    color: #111827;
-    margin-bottom: 16px;
-    letter-spacing: -0.5px;
-}
-
-.hero-bio {
-    font-size: 1.02rem;
-    color: #4b5563;
-    line-height: 1.6;
-    max-width: 520px;
-    margin-bottom: 26px;
-}
-
-/* Hero Right Profile Box */
-.hero-right {
-    flex: 0 0 310px;
-}
+.hero { display: flex; justify-content: space-between; align-items: center; gap: 40px; padding: 44px; }
+.lead { font-size: 1.02rem; color: var(--muted); max-width: 520px; margin-bottom: 24px; }
 
 .profile-box {
-    background-color: #f9fafb;
-    border: 1px solid #e5e7eb;
+    flex: 0 0 300px;
+    background: #f9fafb;
+    border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 26px 20px;
+    padding: 24px 20px;
     text-align: center;
 }
-
-.profile-photo {
-    width: 120px;
-    height: 120px;
+.avatar {
+    width: 120px; height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #0e94a0;
-    margin: 0 auto 16px auto;
+    border: 3px solid var(--teal);
+    margin: 0 auto 14px;
     display: block;
     box-shadow: 0 4px 12px rgba(14, 148, 160, 0.2);
 }
+.motto { font-size: 0.85rem; color: #6b7280; font-style: italic; }
 
-.avatar-placeholder {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    background-color: #e6f6f7;
-    border: 2px dashed #0e94a0;
-    margin: 0 auto 16px auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #0e94a0;
-}
-
-.avatar-text {
-    font-size: 1.7rem;
-    font-weight: 800;
-    line-height: 1;
-}
-
-.avatar-hint {
-    font-size: 0.65rem;
-    color: #6b7280;
-    margin-top: 4px;
-}
-
-.profile-name {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 4px;
-}
-
-.profile-roll {
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: #0e94a0;
-    margin-bottom: 10px;
-}
-
-.profile-motto {
-    font-size: 0.85rem;
-    color: #6b7280;
-    font-style: italic;
-}
+.teal { background: var(--teal); color: #fff; border: none; }
+.banner-text { font-size: 1.25rem; font-weight: 600; max-width: 850px; margin: 0 auto 20px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tags span { background: #f3f4f6; color: #374151; font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 999px; }
+.teal .tags span { background: rgba(255, 255, 255, 0.18); color: #fff; font-size: 0.88rem; }
 
 /* ========================================================
-   3. ABOUT ME (FULL-WIDTH TEAL BANNER)
+   4. SKILLS, 5. PROJECTS & 6. EDUCATION
 ======================================================== */
-
-.teal-banner-card {
-    background-color: #0e94a0;
-    color: #ffffff;
-    border: none;
-    padding: 38px 32px;
-    text-align: center;
-}
-
-.banner-statement {
-    font-size: 1.28rem;
-    font-weight: 600;
-    line-height: 1.55;
-    max-width: 860px;
-    margin: 0 auto 22px auto;
-}
-
-.banner-labels {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.95rem;
-    font-weight: 500;
-}
-
-.banner-labels span {
-    background: rgba(255, 255, 255, 0.18);
-    padding: 4px 14px;
-    border-radius: 999px;
-}
+.skills-wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: start; }
+#projects > .row-between { margin-bottom: 16px; align-items: flex-end; flex-wrap: wrap; }
+.project { display: flex; flex-direction: column; }
+.project .row-between { margin-bottom: 12px; }
+.project .badge { margin-bottom: 0; }
+.project .muted { flex-grow: 1; margin-bottom: 18px; }
+.year { font-size: 0.8rem; font-weight: 700; color: #9ca3af; }
+.bento-intro { display: flex; flex-direction: column; justify-content: space-between; gap: 20px; align-items: flex-start; }
 
 /* ========================================================
-   4. SKILLS & PLATFORMS
-   2-column layout with 2x2 grid on right.
+   7. CONTACT FORM & FOOTER
 ======================================================== */
-
-.skills-layout {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 28px;
-    align-items: start;
-}
-
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-}
-
-.skill-card {
-    padding: 24px;
-    transition: border-color 0.2s ease;
-}
-
-.skill-card:hover {
-    border-color: #0e94a0;
-}
-
-.card-number {
-    font-size: 0.85rem;
-    font-weight: 800;
-    color: #0e94a0;
-    margin-bottom: 8px;
-    display: inline-block;
-}
-
-.skill-name {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 8px;
-}
-
-.skill-desc {
-    font-size: 0.88rem;
-    color: #4b5563;
-    line-height: 1.55;
-}
-
-/* ========================================================
-   5. PROJECTS ("SELECTED WORK" GRID)
-======================================================== */
-
-.section-header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 16px;
-    padding: 0 4px;
-}
-
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-}
-
-.project-card {
-    display: flex;
-    flex-direction: column;
-    padding: 26px;
-    transition: border-color 0.2s ease;
-}
-
-.project-card:hover {
-    border-color: #0e94a0;
-}
-
-.project-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
-}
-
-.project-year {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #9ca3af;
-}
-
-.project-badge {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #0e94a0;
-    background-color: #e6f6f7;
-    padding: 3px 9px;
-    border-radius: 999px;
-}
-
-.project-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 10px;
-    line-height: 1.35;
-}
-
-.project-desc {
-    font-size: 0.88rem;
-    color: #4b5563;
-    line-height: 1.55;
-    margin-bottom: 20px;
-    flex-grow: 1;
-}
-
-.project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.pill-tag {
-    background-color: #f3f4f6;
-    color: #374151;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 999px;
-}
-
-/* ========================================================
-   6. EDUCATION & ACHIEVEMENTS (BENTO GRID)
-======================================================== */
-
-.bento-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-}
-
-.bento-card {
-    padding: 28px;
-    transition: border-color 0.2s ease;
-}
-
-.bento-card:hover {
-    border-color: #0e94a0;
-}
-
-.bento-header-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.bento-header-text {
-    font-size: 0.95rem;
-    color: #4b5563;
-    line-height: 1.5;
-    margin: 12px 0 20px 0;
-}
-
-.bento-badge {
-    display: inline-block;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #0e94a0;
-    background-color: #e6f6f7;
-    padding: 3px 9px;
-    border-radius: 999px;
-    margin-bottom: 12px;
-}
-
-.bento-item-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 6px;
-}
-
-.bento-item-inst {
-    font-size: 0.86rem;
-    font-weight: 600;
-    color: #0e94a0;
-    margin-bottom: 10px;
-}
-
-.bento-item-desc {
-    font-size: 0.9rem;
-    color: #4b5563;
-    line-height: 1.55;
-}
-
-/* ========================================================
-   7. CONTACT FORM & FOOTER ("LET'S CONNECT")
-======================================================== */
-
-/* Lavender-blue gradient contact card */
-.contact-form-card {
-    background: linear-gradient(135deg, #f3f4ff, #d8dcff);
-    border: 1px solid #d4daff;
-    padding: 42px 32px;
-    text-align: center;
-}
-
-.form-header {
-    margin-bottom: 26px;
-}
-
-.form-heading {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: #111827;
-    margin-bottom: 8px;
-    letter-spacing: -0.5px;
-}
-
-.form-subtitle {
-    font-size: 0.95rem;
-    color: #4b5563;
-}
-
-.contact-form {
-    max-width: 540px;
-    margin: 0 auto;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.form-group label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #374151;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
+.contact-box { background: linear-gradient(135deg, #f3f4ff, #d8dcff); border-color: #d4daff; padding: 42px 32px; }
+.form { max-width: 540px; margin: 24px auto 0; text-align: left; display: flex; flex-direction: column; gap: 14px; }
+.form label { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; font-weight: 600; color: #374151; }
+.form input, .form textarea {
     padding: 12px 16px;
     border-radius: 12px;
     border: 1px solid #cbd5e1;
-    font-family: inherit;
-    font-size: 0.92rem;
-    background-color: #ffffff;
-    color: #111827;
+    font: inherit;
+    background: #fff;
 }
+.form input:focus, .form textarea:focus { outline: 2px solid var(--teal); border-color: var(--teal); }
 
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: 2px solid #0e94a0;
-    border-color: #0e94a0;
-}
+.email-link { font-size: 1.05rem; font-weight: 700; color: var(--teal); text-decoration: none; word-break: break-all; }
+.email-link:hover { text-decoration: underline; }
+.teal-sub { font-size: 0.9rem; opacity: 0.92; margin-bottom: 8px; }
 
-.btn-submit {
-    width: 100%;
-    padding: 13px;
-    font-size: 0.98rem;
-    margin-top: 6px;
-}
-
-/* Footer Split Row (Direct chat + Teal card) */
-.footer-split-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    margin-top: 18px;
-}
-
-.footer-chat-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.chat-heading {
-    font-size: 1.45rem;
-    font-weight: 800;
-    color: #111827;
-    margin-bottom: 8px;
-}
-
-.chat-desc {
-    font-size: 0.9rem;
-    color: #6b7280;
-    margin-bottom: 16px;
-}
-
-.chat-email-link {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #0e94a0;
-    text-decoration: none;
-    word-break: break-all;
-}
-
-.chat-email-link:hover {
-    text-decoration: underline;
-}
-
-/* Right Teal Social Card */
-.footer-teal-card {
-    background-color: #0e94a0;
-    color: #ffffff;
-    border: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.teal-card-heading {
-    font-size: 1.35rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.teal-card-sub {
-    font-size: 0.88rem;
-    opacity: 0.92;
-    margin-bottom: 18px;
-    line-height: 1.45;
-}
-
-.social-pill-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.social-pill-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+.socials { display: flex; flex-wrap: wrap; gap: 10px; }
+.socials a {
     padding: 7px 16px;
-    border: 1.5px solid #ffffff;
-    color: #ffffff;
+    border: 1.5px solid #fff;
+    color: #fff;
     text-decoration: none;
     border-radius: 999px;
     font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 0.5px;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: 0.2s ease;
 }
+.socials a:hover { background: #fff; color: var(--teal); }
 
-.social-pill-link:hover {
-    background-color: #ffffff;
-    color: #0e94a0;
-}
+.bottom-bar { padding: 28px 0 36px; flex-wrap: wrap; }
 
 /* ========================================================
-   BOTTOM BAR
+   RESPONSIVE (MOBILE & TABLET)
 ======================================================== */
-
-.bottom-bar {
-    padding: 16px 0 36px 0;
-}
-
-.bottom-bar-content {
-    width: 92%;
-    max-width: 1080px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.88rem;
-    color: #6b7280;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.bottom-brand {
-    font-weight: 700;
-    color: #111827;
-}
-
-/* ========================================================
-   RESPONSIVE DESIGN (TABLETS & MOBILE SCREENS)
-======================================================== */
-
 @media (max-width: 860px) {
-    .nav-card {
-        border-radius: 20px;
-        flex-wrap: wrap;
-        gap: 14px;
-        padding: 14px 18px;
-    }
-
-    .nav-links {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 12px;
-    }
-
-    .hero-card {
-        flex-direction: column;
-        padding: 32px 24px;
-        text-align: center;
-    }
-
-    .hero-heading {
-        font-size: 2.1rem;
-    }
-
-    .hero-bio {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .hero-right {
-        width: 100%;
-        max-width: 320px;
-    }
-
-    .skills-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .bento-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .footer-split-row {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 540px) {
-    .skills-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .section-header-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .hero-heading {
-        font-size: 1.85rem;
-    }
-
-    .banner-statement {
-        font-size: 1.15rem;
-    }
+    .navbar { border-radius: 20px; flex-wrap: wrap; gap: 12px; }
+    .nav-links { order: 3; width: 100%; justify-content: center; flex-wrap: wrap; gap: 12px; }
+    .hero { flex-direction: column; text-align: center; padding: 32px 24px; }
+    .profile-box { width: 100%; max-width: 320px; }
+    .skills-wrap, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    h1 { font-size: 2rem; }
 }
